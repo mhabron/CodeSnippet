@@ -1,0 +1,220 @@
+
+<!-- UPLOAD BASE HTML FILE LINES -->
+{% extends "whsapp/base.html" %}
+{% block content %}
+
+<!-- THE WEBPAGE FORMATTING -->
+<body>
+
+ <!-- TOP NAVIGATION BAR DIV-->
+ <div class="w3-bar w3-top w3-black w3-large" style="z-index:4">
+
+  <button class="w3-bar-item w3-button w3-hover-none w3-hover-text-light-grey" onclick="w3_open();"><i class="fa fa-bars"></i>  Menu</button>
+
+  <span class="w3-bar-item w3-right">
+    <i class="fa fa-user-circle">{% if request.user.username == '' %} Log In{% else %} {{request.user.username}}{% endif %}</i>
+  </span>
+</div>
+
+<!-- THE EXPANDABLE SANDWICH THING (Hamburger - PB :) )THAT EVAN LIKES -->
+<br><br>
+<nav class="w3-sidebar w3-white w3-animate-left" style="display:none;z-index:3;width:280px;" id="mySidebar"><br>
+  <div class="w3-container w3-row">
+    {% if request.user.is_authenticated %} 
+      <div class="w3-col s4">
+        {% load static %}
+        <img src="{% static 'whsapp/default-profile-icon.jpg' %}" alt="default-profile-icon" class="w3-circle" style="width:50px">
+      </div>
+      <div class="w3-col s8 w3-bar">
+        <span>Welcome, 
+          <strong>
+            {{ request.user.username }}
+          </strong>
+        </span><br>
+      {% endif %}
+      {% if request.user.is_authenticated %}
+        <a href="{% url 'post_new' %}" class="w3-bar-item w3-button"><i class="fa fa-calendar-plus-o"></i></a>
+        <a href="#" class="w3-bar-item w3-button"><i class="fa fa-calendar-minus-o"></i></a>
+        <a href="{% url 'logout' %}" class="w3-bar-item w3-button"><i class="fa fa-sign-out"></i></a>
+      {% else %}
+        <a href="{% url 'login' %}"class="w3-bar-item w3-button"><i class="fa fa-sign-in"></i>&nbsp Sign in</a>
+      {% endif %}
+    </div>
+  </div>
+  <!-- FILTERS THAT PRITHVI WILL WORK ON -->
+  <hr>
+  <div class="w3-container">
+    <h5>Event Filters</h5>
+  </div>
+  <div class="w3-bar-block">
+    <a href="#" class="w3-bar-item w3-button w3-padding"><i class="fa fa-bank fa-fw"></i> Official</a>
+    <a href="#" class="w3-bar-item w3-button w3-padding"><i class="fa fa-users fa-fw"></i> Student Organizations </a>
+    <a href="#" class="w3-bar-item w3-button w3-padding w3-blue"><i class="fa fa-users fa-fw"></i> Clubs</a>
+    <a href="#" class="w3-bar-item w3-button w3-padding"><i class="fa fa-eye fa-fw"></i> Fraternity</a>
+    <a href="#" class="w3-bar-item w3-button w3-padding"><i class="fa fa-users fa-fw"></i> Sorority</a>
+  </div>
+</nav>
+
+<!-- Overlay effect when opening sidebar-->
+<div class="w3-overlay w3-animate-opacity" onclick="w3_close()" style="cursor:pointer" title="close side menu" id="myOverlay"></div>
+<!-- END OF THE EXPANDABLE SANDWICH THING THAT EVAN LIKES -->
+
+
+<!-- THE FANCY MAP BACKGROUND -->
+<div id='map'>
+</div>
+
+<!-- THE LIVE FEED OF EVENTS -->
+<div class="feed">
+  <h2>Event Feed</h2>
+  <div style = "border-top: solid 1px #eee; width:100%;align-items: center;display: flex;flex-direction: column;">
+    <a href="{% if request.get_full_path == '/' %}?ordering=-start_date{% elif request.get_full_path == '/?ordering=-start_date' %}/?ordering=-created_date{% elif request.get_full_path == '/?ordering=-created_date' %}/?ordering=-start_date{% endif %}">
+      <button class="btn btn-primary mt-2">{% if request.get_full_path == '/' %}Filter by Event Date{% elif request.get_full_path == '/?ordering=-start_date' %}Filter by Post Date{% elif request.get_full_path == '/?ordering=-created_date' %}Filter by Event Date{% endif %}
+      </button>
+    </a>
+  </div>
+  <div class="chat">
+    <!-- loops through the database to show all events -->
+    {% for post in posts %}
+    <div class="yours messages">
+      <div class="message">
+        <b>{{ post.title}}</b>
+        <br>
+        {{ post.start_date}} -
+        {{ post.end_date}}
+        <br>
+        {{ post.start_time }} -
+        {{ post.end_time }}
+        <h6 style="font-size: 12px;margin: 0;">Posted by: {{post.host}} on {{ post.created_date|date:'m/d/Y' }}</h6>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+
+  <!-- SCRIPTS TO DISPLAY MAP BACKGROUND -->
+  <script src='//api.tiles.mapbox.com/mapbox.js/plugins/leaflet-omnivore/v0.3.1/leaflet-omnivore.min.js'></script>
+
+  <script>
+    mapboxgl.accessToken = 'pk.eyJ1Ijoid2hzYXBwIiwiYSI6ImNrMmVhdG10cDA3bW0zb24wOHN4N3d5cmkifQ._NMZTI2kKSLY5RWfNRYY7A';
+// THE BOUNDS FOR THE MAP
+var bounds = [
+[-77.3374450075, 38.8196000001], // Southwest coordinates
+[-77.2824549925, 38.8430300099]  // Northeast coordinates
+];
+var map = new mapboxgl.Map({
+  container: 'map',
+  style: 'mapbox://styles/whsapp/ck2nhixxm0o9o1cnuk1rj0imb',
+  center:[-77.306575, 38.830368],
+  zoom: 15.5,
+  pitch: 45,
+  bearing: -17.6,
+  antialias: true,
+});
+map.setMaxBounds(bounds);
+
+var xhr = new XMLHttpRequest();
+    xhr.open("GET", "test.txt", false);  // synchronous request
+    xhr.send(null);
+var test = xhr.responseText;
+var ourPlacemarks = JSON.parse(test);
+
+map.on('load', function() {
+
+  var layers = map.getStyle().layers;
+
+var labelLayerId;
+for (var i = 0; i < layers.length; i++) {
+if (layers[i].type === 'symbol' && layers[i].layout['text-field']) {
+labelLayerId = layers[i].id;
+break;
+}
+}
+
+  map.addLayer({
+    id: 'ourPlacemarks',
+    type: 'symbol',
+    source: {
+      type: 'geojson',
+      data: ourPlacemarks
+    },
+    layout: {
+      'icon-image': 'marker-editor',
+      'icon-allow-overlap': true
+    },
+    paint: { }
+  });
+  map.addLayer({
+  'id': '3d-buildings',
+  'source': 'composite',
+  'source-layer': 'building',
+  'filter': ['==', 'extrude', 'true'],
+  'type': 'fill-extrusion',
+  'minzoom': 15,
+  'paint': {
+  'fill-extrusion-color': '#aaa',
+
+  // use an 'interpolate' expression to add a smooth transition effect to the
+  // buildings as the user zooms in
+  'fill-extrusion-height': [
+  "interpolate", ["linear"], ["zoom"],
+  15, 0,
+  15.05, ["get", "height"]
+  ],
+  'fill-extrusion-base': [
+  "interpolate", ["linear"], ["zoom"],
+  15, 0,
+  15.05, ["get", "min_height"]
+  ],
+  'fill-extrusion-opacity': .6
+  }
+  }, labelLayerId);
+  });
+
+map.on('click', function(e) {
+  var features = map.queryRenderedFeatures(e.point, {
+    layers: ['ourPlacemarks', '3d-buildings'] // replace this with the name of the layer
+  });
+
+  if (!features.length) {
+    return;
+  }
+
+  var feature = features[0];
+
+  var popup = new mapboxgl.Popup({ offset: [0, -15] })
+  .setLngLat(feature.geometry.coordinates)
+  .setHTML('<img src= "' + feature.properties.Pict + '" alt="Smiley face" style = "float:left;" height="40" width="60">' + '<div style ="margin-top:10px;width:100px;height:40px;float:right;"><h6 style="float:left;">' + feature.properties.title + '</h6></div><div style = "margin-top: 50px;"><p>' + feature.properties.description + '</p></div>')
+  .addTo(map);
+});
+</script>
+
+ <!-- SCRIPT THAT OPENS AND CLOSES THE SANDWICH THING THAT EVAN LIKES -->
+ <script>
+  // Get the Sidebar
+  var mySidebar = document.getElementById("mySidebar");
+
+  // Get the DIV with overlay effect
+  var overlayBg = document.getElementById("myOverlay");
+
+  // Toggle between showing and hiding the sidebar, and add overlay effect
+  function w3_open() {
+    if (mySidebar.style.display === 'none') {
+      mySidebar.style.display = 'block';
+      overlayBg.style.display = "block";
+    }
+    else {
+      w3_close();
+    }
+  }
+
+  // Close the sidebar with the close button
+  function w3_close() {
+    mySidebar.style.display = "none";
+    overlayBg.style.display = "none";
+  }
+</script>
+
+</body>
+{% endblock content %}
+<!-- END OF HOME HTML FILE -->

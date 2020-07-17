@@ -1,0 +1,77 @@
+html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
+.container {
+    min-width: 300px;
+    width: 80%;
+    max-width: 500px;
+    margin: auto;
+}
+
+h6{
+font-size: 5px;
+}
+
+.sub-heding {
+    font-weight: normal;
+}
+
+button {
+    outline: none;
+    border: none;
+    
+    /* background: #47BA86;
+    border-radius: 5px;
+    color: #fff;  */
+    cursor: pointer;
+}
+button:hover {
+    opacity: .7;
+}
+
+.info {
+    background: #eee;
+    padding: 5px 10px;
+    text-align: right;
+}
+
+ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+ul > li {
+    background: #fff;
+    border: 1px solid #ddd;
+    margin-bottom: 10px;
+    padding: 10px 20px;
+    border-radius: 5px;
+    /* cursor: pointer; */
+    
+    display: flex;
+    justify-content: space-between;
+    align-items:center;
+}
+ul > li:last-child {
+    margin-bottom: 0;
+}
+ul > li:active {
+    border: 2px solid #4CB987;
+}
+ul > li:hover {
+    border: 1px solid #4CB987;
+}
+
+.unique-id {
+    color: #47BA86;
+}
+
+/* delete button */
+.delete {
+    width: 30px;
+    height: 30px;
+    
+    background: #F35E61;
+    border-radius: 50%;
+    color: #fff;
+    cursor: pointer;
+}
+

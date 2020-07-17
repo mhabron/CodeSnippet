@@ -1,0 +1,105 @@
+{% extends "whsapp/base.html" %}
+
+{% block title %}Log In{% endblock %}
+{% block content %}
+
+
+<style>
+body {font-family: Arial, Helvetica, sans-serif; text-align:center;
+}
+form {border: 3px solid #f1f1f1;
+width: 400px;
+margin: 0 auto;}
+
+input[type=text], input[type=password] {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+}
+
+button {
+  background-color: #4CAF50;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+}
+
+label{
+  display:none;
+}
+button:hover {
+  opacity: 0.8;
+}
+
+.cancelbtn {
+  width: auto;
+  padding: 10px 18px;
+}
+
+.imgcontainer {
+  text-align: center;
+  margin: 24px 0 12px 0;
+}
+
+img.avatar {
+  width: 40%;
+  border-radius: 50%;
+}
+
+.container {
+  padding: 16px;
+}
+
+span.psw {
+  float: right;
+  padding-top: 16px;
+}
+
+/* Change styles for span and cancel button on extra small screens */
+@media screen and (max-width: 300px) {
+  span.psw {
+     display: block;
+     float: none;
+  }
+  .cancelbtn {
+     width: 100%;
+  }
+}
+</style>
+
+
+	<form method= "POST">
+    <h2>What's Happening Login</h2>
+	  <div class="imgcontainer">
+      {% load static %}
+	    <img src="{% static 'whsapp/default-profile-icon.jpg' %}" alt="default-profile-icon" width = "50px" height = "150px" class="avatar">
+	  </div>
+	  {% csrf_token %}
+	  <fieldset class="form-group">
+		<legend class="border-bottom mb-4">Login Form</legend>
+			{{ form.as_p }}
+			<button class="submit btn btn-success" type ="submit" style = "padding-top: 10px; padding-bottom: 10px;">Login</button>
+		</fieldset>
+		<div class="form-group">
+		</div>
+	</form>
+	<div class="border-top pt-3">
+		<small class="text-muted">
+		Don't have an account?  <a href= "{% url 'signup' %}"><button class="cancelbtn btn btn-info">Create one here!</button></a>
+		</small>
+	</div>
+</form>
+
+<script>
+document.getElementById('id_username').placeholder='Enter Username';
+
+document.getElementById('id_password').placeholder='Enter Password';
+</script>
+
+{% endblock content %}

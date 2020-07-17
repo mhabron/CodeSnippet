@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2" xmlns:gx="http://www.google.com/kml/ext/2.2">
+    <Document id="1">
+        <Placemark id="3">
+            <name>A Sample Placemark</name>
+            <description>&lt;img src=&quot;https://previews.123rf.com/images/aquir/aquir1311/aquir131100316/23569861-sample-grunge-red-round-stamp.jpg&quot; alt=&quot;picture&quot; width=&quot;100&quot; height=&quot;100&quot; align=&quot;left&quot; /&gt;This is a sample placemark of an event.</description>
+            <Point id="2">
+                <coordinates>-77.3093946,38.8295271,0.0</coordinates>
+            </Point>
+        </Placemark>
+        <Placemark id="5">
+            <name>Engineering Event</name>
+            <description>&lt;img src=&quot;https://previews.123rf.com/images/aquir/aquir1311/aquir131100316/23569861-sample-grunge-red-round-stamp.jpg&quot; alt=&quot;picture&quot; width=&quot;100&quot; height=&quot;100&quot; align=&quot;left&quot; /&gt;This is an engineering event.</description>
+            <Point id="4">
+                <coordinates>-77.30495,38.827606,0.0</coordinates>
+            </Point>
+        </Placemark>
+        <Placemark id="7">
+            <name>Engineering Event</name>
+            <description>&lt;img src=&quot;https://previews.123rf.com/images/aquir/aquir1311/aquir131100316/23569861-sample-grunge-red-round-stamp.jpg&quot; alt=&quot;picture&quot; width=&quot;100&quot; height=&quot;100&quot; align=&quot;left&quot; /&gt;This is an engineering event.</description>
+            <Point id="6">
+                <coordinates>-77.30495,38.827606,0.0</coordinates>
+            </Point>
+        </Placemark>
+        <Placemark id="9">
+            <name>Engineering Event</name>
+            <description>&lt;img src=&quot;https://previews.123rf.com/images/aquir/aquir1311/aquir131100316/23569861-sample-grunge-red-round-stamp.jpg&quot; alt=&quot;picture&quot; width=&quot;100&quot; height=&quot;100&quot; align=&quot;left&quot; /&gt;This is an engineering event.</description>
+            <Point id="8">
+                <coordinates>-77.30495,38.827606,0.0</coordinates>
+            </Point>
+        </Placemark>
+        <Placemark id="11">
+            <name>Engineering Event</name>
+            <description>&lt;img src=&quot;https://previews.123rf.com/images/aquir/aquir1311/aquir131100316/23569861-sample-grunge-red-round-stamp.jpg&quot; alt=&quot;picture&quot; width=&quot;100&quot; height=&quot;100&quot; align=&quot;left&quot; /&gt;This is an engineering event.</description>
+            <Point id="10">
+                <coordinates>-77.30495,38.827606,0.0</coordinates>
+            </Point>
+        </Placemark>
+        <Placemark id="13">
+            <name>Engineering Event</name>
+            <description>&lt;img src=&quot;https://previews.123rf.com/images/aquir/aquir1311/aquir131100316/23569861-sample-grunge-red-round-stamp.jpg&quot; alt=&quot;picture&quot; width=&quot;100&quot; height=&quot;100&quot; align=&quot;left&quot; /&gt;This is an engineering event.</description>
+            <Point id="12">
+                <coordinates>-77.30495,38.827606,0.0</coordinates>
+            </Point>
+        </Placemark>
+        <Placemark id="15">
+            <name>Engineering Event</name>
+            <description>&lt;img src=&quot;https://previews.123rf.com/images/aquir/aquir1311/aquir131100316/23569861-sample-grunge-red-round-stamp.jpg&quot; alt=&quot;picture&quot; width=&quot;100&quot; height=&quot;100&quot; align=&quot;left&quot; /&gt;This is an engineering event.</description>
+            <Point id="14">
+                <coordinates>-77.30495,38.827606,0.0</coordinates>
+            </Point>
+        </Placemark>
+    </Document>
+</kml>
